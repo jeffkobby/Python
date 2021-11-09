@@ -28,12 +28,17 @@ def search():
     except JSONDecodeError:
         messagebox.showinfo(title="Empty File", message="There is no data in file")
     else:
-        for website, credentials in data.items():
-            if user_search == website:
-                messagebox.showinfo(title=f"{website} credentials",
-                                    message=f"Username/Email: {credentials['email']} \n"
-                                            f"Password: {credentials['password']}")
-                pyperclip.copy(credentials['password'])
+        if user_search in data:
+            email = data[user_search]['email']
+            password = data[user_search]['password']
+            messagebox.showinfo(title=f"{user_search} credentials",
+                                message=f"Username/Email: {email} \n"
+                                        f"Password: {password}")
+            pyperclip.copy(password)
+
+        else:
+            messagebox.showinfo(title=f"Logins not found",
+                                message=f"Your credentials for this site does not exist")
     finally:
         website_entry.delete(0, 'end')
 
