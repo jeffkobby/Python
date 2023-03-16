@@ -1,0 +1,64 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h1>All Cafes</h1>
+
+            <table class="table">
+
+                <!--       Table Head (Column Names)         -->
+                <thead>
+                <tr>
+                    {% for title in cafes[0] %}
+                    <th scope="col">{{title}}</th>
+                    {% endfor %}
+                </tr>
+
+                </thead>
+
+                <!--          Table Body                       -->
+                <tbody>
+                {% for row in cafes[1:] %}
+
+                <!--          Create a row                     -->
+                <tr>
+                    {% for item in row %}
+                    <!--          Check if row data contains a link -->
+                    {% if "https://" in item %}
+                    <td>
+                        <a href="{{item}}" target="_blank">Maps Link</a>
+                    </td>
+
+                    <!--          Add data to table if it does not contain a link -->
+                    {% else %}
+                    <td>
+                        <p>{{item}}</p>
+                    </td>
+
+                    {% endif %}
+
+                    {% endfor %}
+                </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+            <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
